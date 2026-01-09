@@ -66,7 +66,7 @@ If you want to learn more about building native executables, please consult http
 To create the container image review the file [Containerfile.jvm](./src/main/docker/Containerfile.jvm)
 
 ```Containerfile
-FROM registry.access.redhat.com/ubi9/openjdk-21-runtime:1.21-1
+FROM registry.access.redhat.com/ubi9/openjdk-21-runtime:1.24
 
 ENV LANGUAGE='en_US:en'
 
@@ -99,19 +99,31 @@ Using jib (quarkus-container-image-jib) extension
 ./mvnw package -Pjib
 ```
 
-Check the iamge
+Check the image
 
 ```shell script
 podman run --rm -it -e DATABASE_HOST=alumno -p 8080:8080 rha/library-shop-jib:1.0.0
 ```
 
-Using docker (quarkus-container-image-docker) extension
+Using podman (quarkus-container-image-podman) extension
+
+```shell script
+./mvnw package -Ppodman
+```
+
+Check the image
+
+```shell script
+podman run --rm -it -e DATABASE_HOST=alumno -p 8080:8080 rha/library-shop-podman:1.0.0
+```
+
+Or, using docker (quarkus-container-image-docker) extension
 
 ```shell script
 ./mvnw package -Pdocker
 ```
 
-Check the iamge
+Check the image
 
 ```shell script
 podman run --rm -it -e DATABASE_HOST=alumno -p 8080:8080 rha/library-shop-docker:1.0.0

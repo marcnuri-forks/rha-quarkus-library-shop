@@ -7,8 +7,8 @@
   <version>1.0.0</version>
   <properties>
     <checkstyle.version>3.6.0</checkstyle.version>
-    <compiler-plugin.version>3.13.0</compiler-plugin.version>
-    <eclipse.jkube.version>1.17.0</eclipse.jkube.version>
+    <compiler-plugin.version>3.14.1</compiler-plugin.version>
+    <eclipse.jkube.version>1.18.2</eclipse.jkube.version>
     <jkube.build.switchToDeployment>true</jkube.build.switchToDeployment>
     <jkube.openshift.imageChangeTriggers>false</jkube.openshift.imageChangeTriggers>
     <jkube.kubernetes.well-known-labels>false</jkube.kubernetes.well-known-labels>
@@ -17,9 +17,9 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.17.2</quarkus.platform.version>
+    <quarkus.platform.version>3.30.6</quarkus.platform.version>
     <skipITs>true</skipITs>
-    <surefire-plugin.version>3.5.0</surefire-plugin.version>
+    <surefire-plugin.version>3.5.4</surefire-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -211,7 +211,7 @@
       <properties>
         <skipTests>true</skipTests>
         <quarkus.container-image.build>true</quarkus.container-image.build>
-        <quarkus.jib.base-jvm-image>registry.access.redhat.com/ubi9/openjdk-21-runtime:1.21-1</quarkus.jib.base-jvm-image>
+        <quarkus.jib.base-jvm-image>registry.access.redhat.com/ubi9/openjdk-21-runtime:1.24</quarkus.jib.base-jvm-image>
         <quarkus.container-image.group>rha</quarkus.container-image.group>
         <quarkus.container-image.name>${project.artifactId}-jib</quarkus.container-image.name>
       </properties>
@@ -223,7 +223,7 @@
       </dependencies>
     </profile>
     <profile>
-      <!-- https://quarkus.io/guides/container-image#jib -->
+      <!-- https://quarkus.io/guides/container-image#docker -->
       <id>docker</id>
       <activation>
         <property>
@@ -243,6 +243,30 @@
         <dependency>
           <groupId>io.quarkus</groupId>
           <artifactId>quarkus-container-image-docker</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <!-- https://quarkus.io/guides/container-image#podman -->
+      <id>podman</id>
+      <activation>
+        <property>
+          <name>buildContainer</name>
+          <value>podman</value>
+        </property>
+      </activation>
+      <properties>
+        <skipTests>true</skipTests>
+        <quarkus.container-image.build>true</quarkus.container-image.build>
+        <quarkus.container-image.group>rha</quarkus.container-image.group>
+        <quarkus.podman.dockerfile-jvm-path>src/main/docker/Containerfile.jvm</quarkus.podman.dockerfile-jvm-path>
+        <quarkus.podman.dockerfile-native-path>src/main/docker/Containerfile.native</quarkus.podman.dockerfile-native-path>
+        <quarkus.container-image.name>${project.artifactId}-podman</quarkus.container-image.name>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-container-image-podman</artifactId>
         </dependency>
       </dependencies>
     </profile>
