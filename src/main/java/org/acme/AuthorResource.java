@@ -1,8 +1,8 @@
 package org.acme;
 
 import java.util.List;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -13,7 +13,7 @@ import org.acme.model.Author;
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthorResource {
 
-    @PersistenceContext
+    @Inject
     EntityManager entityManager;
 
     @GET
